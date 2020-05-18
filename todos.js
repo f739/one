@@ -1,6 +1,6 @@
-const express = require(express);
+const express = require('express');
 
-const app = express();
+ const app = express();
 
 const filename = 'todos.JSON';
 
@@ -8,12 +8,12 @@ const fs = require ('fs').promises;
 
 const initioltodos = [] ;
 
-const store ={
+const store = {
   async read () {
     try {
       await fs.access (filename);
       this.todos = JSON.parse( ( 
-        await fs.readfile(filename) ) .string());
+        await fs.readFile(filename) ).toString());
     } catch (e){
       this.todos = initioltodos;
     }  return this.todos;
@@ -21,7 +21,7 @@ const store ={
 
 
   async save (){
-    await fs.writefile (filename,JSON.stringify(store.todos));
+    await fs.writeFile (filename,JSON.stringify(store.todos));
   },
 
 async getindexbyid (id){
@@ -53,9 +53,13 @@ async getnexttodoid(){
 
 app.get ('/todos',(req, res) => {
 store.save();
-  res.JSON (store.read());
+  res.json (store.read());
 })
 
-app.lisen(8080, () => {
+app.get ('/tos',(req, res) => {
+  res.send ('full');
+})
+
+app.listen (8000, () => {
   console.log('RANING.....');
 });
